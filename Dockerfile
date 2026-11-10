@@ -16,9 +16,11 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -U -r requirements.txt
 
 # Copy application code, templates, and static assets
-COPY app.py ./
-COPY templates ./templates
-COPY static ./static
+COPY . .
+RUN mkdir -p templates static \
+    && for f in index.html terms.html privacy.html; do if [ -f "$f" ]; then mv "$f" templates/; fi; done \
+    && for f in style.css script.js; do if [ -f "$f" ]; then mv "$f" static/; fi; done \
+    && test -f templates/index.html && test -f static/style.css
 
 # Ensure the temp directory exists and is writable
 RUN mkdir -p /tmp/vd-jobs && chown -R vduser:vduser /tmp/vd-jobs /app
