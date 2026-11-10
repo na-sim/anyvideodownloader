@@ -120,10 +120,10 @@ def _security_headers(response):
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
         "script-src 'self'; "
-        "style-src 'self'; "
-        "img-src 'self' data:; "
+        "style-src 'self' https://fonts.googleapis.com; "
+        "img-src 'self' data: https:; "
         "connect-src 'self'; "
-        "font-src 'self'; "
+        "font-src 'self' https://fonts.gstatic.com; "
         "object-src 'none'; "
         "frame-ancestors 'none'; "
         "base-uri 'self'; "
@@ -282,6 +282,8 @@ def _classify_error(msg: str) -> str:
         return "Live streams are not supported."
     if "unsupported url" in m or "no suitable" in m or "no video formats" in m:
         return "This URL is not supported."
+    if "blocked" in m or "403" in m or "forbidden" in m or "bot" in m or "429" in m:
+        return "The video site blocked this cloud server IP (bot check). Try a different link or run locally."
     if "private" in m or "sign in" in m or "login" in m or "authentication" in m:
         return "This video is private or requires sign-in."
     if "not available" in m or "removed" in m or "does not exist" in m or "404" in m:
@@ -290,8 +292,6 @@ def _classify_error(msg: str) -> str:
         return f"This video is too long (max {MAX_DURATION_SECONDS // 60} minutes)."
     if "filesize" in m or "max-filesize" in m or "too large" in m:
         return f"This file is too large (max {MAX_FILESIZE_MB} MB)."
-    if "blocked" in m or "403" in m or "forbidden" in m or "bot" in m or "429" in m:
-        return "The video site blocked this server request. Try a different link."
     if "copyright" in m:
         return "This video cannot be downloaded due to copyright restrictions."
     if "drm" in m:
