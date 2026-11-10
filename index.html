@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Downloader</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Video Downloader</h1>
+      <p class="tagline">Paste a link, pick a format, download.</p>
+    </header>
+
+    <div class="card">
+      <form id="download-form" autocomplete="off" novalidate>
+        <div class="field">
+          <label for="url-input" class="sr-only">Video URL</label>
+          <input
+            type="url"
+            id="url-input"
+            name="url"
+            class="url-input"
+            placeholder="Paste a video link here"
+            required
+            maxlength="2000"
+          >
+        </div>
+
+        <div class="options-row">
+          <div class="field format-field">
+            <span class="field-label">Format</span>
+            <div class="segmented" role="radiogroup" aria-label="Format">
+              <button type="button" class="seg-btn selected" data-format="mp4" aria-pressed="true">MP4</button>
+              <button type="button" class="seg-btn" data-format="mp3" aria-pressed="false">MP3</button>
+            </div>
+          </div>
+
+          <div class="field quality-field">
+            <label for="quality-select" class="field-label">Quality</label>
+            <select id="quality-select" name="quality" class="quality-select" required>
+              <option value="" disabled selected>Select quality</option>
+              <option value="360">360p</option>
+              <option value="480">480p</option>
+              <option value="720">720p</option>
+              <option value="1080">1080p</option>
+            </select>
+            <p class="quality-hint" id="quality-hint" hidden>Please choose a quality.</p>
+          </div>
+        </div>
+
+        <button type="submit" id="download-btn" class="download-btn" disabled>
+          Download
+        </button>
+      </form>
+
+      <div id="status-area" class="status-area" hidden>
+        <div id="progress-section" class="progress-section" hidden>
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <p class="progress-text">
+            <span id="progress-pct">0%</span>
+            <span id="progress-msg">Queued…</span>
+          </p>
+        </div>
+
+        <div id="done-section" class="done-section" hidden>
+          <p class="done-msg">Your file is ready</p>
+          <a id="save-btn" class="save-btn" href="#" download>Save to device</a>
+          <p class="expiry-note">The file is deleted from our server automatically after about 15 minutes.</p>
+          <button type="button" id="another-btn" class="retry-btn">Download another</button>
+        </div>
+
+        <div id="error-section" class="error-section" hidden>
+          <div class="error-box">
+            <p><span class="error-word">Error:</span> <span id="error-msg"></span></p>
+          </div>
+          <button type="button" id="retry-btn" class="retry-btn">Try again</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>Only download content you own or have permission to download.</p>
+      <p><a href="/terms">Terms of Use</a> · <a href="/privacy">Privacy Policy</a></p>
+      <p>© 2026 Nasim. All rights reserved. · Powered by Nasim.</p>
+    </footer>
+  </main>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
