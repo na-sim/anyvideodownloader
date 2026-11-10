@@ -1,0 +1,24 @@
+# Render Blueprint — https://docs.render.com/blueprint-spec
+#
+# "free" plan works for testing but sleeps after 15 min idle and has 512 MB
+# RAM.  1080p merges need more memory — upgrade to "starter" or higher.
+
+services:
+  - type: web
+    name: video-downloader
+    runtime: docker
+    plan: starter          # change to "free" if testing; see note above
+    branch: main
+    autoDeploy: true
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: MAX_FILESIZE_MB
+        value: "500"
+      - key: MAX_DURATION_SECONDS
+        value: "1800"
+      - key: MAX_CONCURRENT_JOBS
+        value: "2"
+      - key: JOB_TTL_SECONDS
+        value: "900"
