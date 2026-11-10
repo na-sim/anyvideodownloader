@@ -9,38 +9,6 @@ Background-job architecture handles Cloudflare's 100-second proxy timeout.
 
 ---
 
-## Quick Start (local, no Docker)
-
-```bash
-# 1. Clone and enter the directory
-git clone <your-repo-url> video-downloader
-cd video-downloader
-
-# 2. Create a virtual environment
-python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# macOS / Linux:
-source .venv/bin/activate
-
-# 3. Install dependencies
-pip install -r requirements.txt
-
-# 4. Make sure ffmpeg is installed and on PATH
-ffmpeg -version
-
-# 5. Run
-python app.py
-# → http://localhost:10000
-```
-
-## Quick Start (Docker)
-
-```bash
-docker build -t video-downloader .
-docker run -p 10000:10000 video-downloader
-# → http://localhost:10000
-```
 
 ---
 
