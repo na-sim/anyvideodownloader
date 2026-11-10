@@ -68,7 +68,13 @@ _INFO_CACHE_TTL = 300
 # Flask application & rate limiting
 # ---------------------------------------------------------------------------
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    static_folder=os.path.join(BASE_DIR, "static"),
+)
 app.config["MAX_CONTENT_LENGTH"] = 64 * 1024  # 64 KB max request body
 
 # Trust one reverse-proxy hop (Cloudflare / Render)
@@ -115,7 +121,7 @@ def _security_headers(response):
         "default-src 'self'; "
         "script-src 'self'; "
         "style-src 'self'; "
-        "img-src 'self' data: https:; "
+        "img-src 'self' data:; "
         "connect-src 'self'; "
         "font-src 'self'; "
         "object-src 'none'; "
@@ -582,6 +588,16 @@ threading.Thread(target=_cleanup_loop, daemon=True).start()
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/terms")
+def terms():
+    return render_template("terms.html")
+
+
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
 
 
 @app.route("/health")

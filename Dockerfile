@@ -15,8 +15,10 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -U -r requirements.txt
 
-# Copy application code
-COPY . .
+# Copy application code, templates, and static assets
+COPY app.py ./
+COPY templates ./templates
+COPY static ./static
 
 # Ensure the temp directory exists and is writable
 RUN mkdir -p /tmp/vd-jobs && chown -R vduser:vduser /tmp/vd-jobs /app
